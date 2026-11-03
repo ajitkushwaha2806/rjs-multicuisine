@@ -8,6 +8,7 @@ import Toast from './components/Toast';
 import HomePage from './pages/HomePage';
 import MenuPage from './pages/MenuPage';
 import ContactPage from './pages/ContactPage';
+import AdminAuthPage from './pages/AdminAuthPage';
 
 // Scroll to top on route change helper
 const ScrollToTop = () => {
@@ -32,6 +33,8 @@ export const App = () => {
               <Route path="/" element={<HomePage />} />
               <Route path="/menu" element={<MenuPage />} />
               <Route path="/contact" element={<ContactPage />} />
+              <Route path="/admin" element={<AdminAuthPage />} />
+              <Route path="/portal" element={<AdminAuthPage />} />
               <Route path="*" element={<HomePage />} />
             </Routes>
           </main>

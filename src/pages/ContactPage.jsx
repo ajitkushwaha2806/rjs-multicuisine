@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
-import { 
-  MapPin, 
-  Phone, 
-  Mail, 
-  Clock, 
-  Calendar, 
-  Users, 
-  MessageCircle, 
-  CheckCircle2, 
-  HelpCircle, 
+import {
+  MapPin,
+  Phone,
+  Mail,
+  Clock,
+  Calendar,
+  Users,
+  MessageCircle,
+  CheckCircle2,
+  HelpCircle,
   Sparkles,
   ArrowRight
 } from 'lucide-react';
@@ -48,7 +48,7 @@ export const ContactPage = () => {
 
     const cleanNumber = RESTAURANT_CONFIG.whatsappNumber.replace(/[^0-9]/g, '');
     const url = `https://wa.me/${cleanNumber}?text=${encodeURIComponent(message)}`;
-    
+
     setBookingSuccess(true);
     window.open(url, '_blank', 'noopener,noreferrer');
   };
@@ -78,7 +78,7 @@ export const ContactPage = () => {
 
   return (
     <div className="min-h-screen bg-[#FAF7F2] pb-24">
-      
+
       {/* Header Banner */}
       <div className="bg-burgundy-950 text-white py-14 sm:py-20 px-4 border-b border-gold-500/30">
         <div className="max-w-4xl mx-auto text-center space-y-3">
@@ -96,10 +96,10 @@ export const ContactPage = () => {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-8 space-y-16">
-        
+
         {/* Main Grid: Reservation Form & Contact Cards */}
         <div className="grid lg:grid-cols-12 gap-8 items-start">
-          
+
           {/* Reservation Form */}
           <div className="lg:col-span-7 bg-white rounded-3xl p-6 sm:p-10 shadow-xl border border-stone-200/80">
             <div className="mb-6">
@@ -148,7 +148,7 @@ export const ContactPage = () => {
                     type="tel"
                     name="phone"
                     required
-                    placeholder="e.g. 9876543210"
+                    placeholder="e.g. 6352188727"
                     value={formData.phone}
                     onChange={handleInputChange}
                     className="w-full text-xs sm:text-sm px-3.5 py-2.5 rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-burgundy-600 focus:border-burgundy-600 bg-stone-50"
@@ -256,7 +256,7 @@ export const ContactPage = () => {
 
           {/* Contact Details & Info Cards */}
           <div className="lg:col-span-5 space-y-6">
-            
+
             {/* Quick Contact Card */}
             <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-xl border border-stone-200/80 space-y-5">
               <h3 className="font-serif font-bold text-xl text-burgundy-950 border-b border-stone-100 pb-3">

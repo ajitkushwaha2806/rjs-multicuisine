@@ -48,7 +48,7 @@ Built with **React 19**, **Tailwind CSS**, and **Vite**, featuring an authentic 
   I would like to place an order.
 
   Customer Name: Rahul Sharma
-  Customer Phone: 9876543210
+  Customer Phone: 6352188727
   Order Type: Home Delivery
 
   --- Order Details ---
@@ -94,7 +94,7 @@ export const RESTAURANT_CONFIG = {
   tagline: "A World of Flavours, One Destination.",
 
   // Replace with your restaurant's WhatsApp number (Country code + digits without '+' or symbols)
-  whatsappNumber: "919876543210", 
+  whatsappNumber: "916352188727", 
 
   phone: "+91 98765 43210",
   email: "orders@rjsmulticuisine.com",
@@ -111,7 +111,7 @@ export const RESTAURANT_CONFIG = {
 
 You can also set the WhatsApp number using an environment variable `.env`:
 ```env
-VITE_WHATSAPP_NUMBER=919876543210
+VITE_WHATSAPP_NUMBER=916352188727
 ```
 
 ### 2. Menu Items & Pricing

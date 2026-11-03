@@ -81,7 +81,7 @@ export const CartDrawer = () => {
 
       <div className="fixed inset-y-0 right-0 max-w-full flex w-full sm:w-auto">
         <div className="w-full sm:w-[440px] max-w-full bg-[#FAF7F2] shadow-2xl flex flex-col h-full border-l border-burgundy-900/10">
-          
+
           {/* Header */}
           <div className="p-4 sm:p-5 bg-burgundy-950 text-white flex items-center justify-between border-b border-burgundy-800 shrink-0">
             <div className="flex items-center gap-2.5 min-w-0">
@@ -131,11 +131,10 @@ export const CartDrawer = () => {
                   <button
                     type="button"
                     onClick={() => setOrderType('delivery')}
-                    className={`flex-1 py-2 px-3 rounded-lg text-xs sm:text-sm font-semibold flex items-center justify-center gap-1.5 transition-all ${
-                      orderType === 'delivery'
+                    className={`flex-1 py-2 px-3 rounded-lg text-xs sm:text-sm font-semibold flex items-center justify-center gap-1.5 transition-all ${orderType === 'delivery'
                         ? 'bg-burgundy-900 text-gold-300 shadow-sm'
                         : 'text-stone-600 hover:text-stone-900'
-                    }`}
+                      }`}
                   >
                     <Bike className="w-4 h-4 shrink-0" />
                     <span>Home Delivery</span>
@@ -143,11 +142,10 @@ export const CartDrawer = () => {
                   <button
                     type="button"
                     onClick={() => setOrderType('takeaway')}
-                    className={`flex-1 py-2 px-3 rounded-lg text-xs sm:text-sm font-semibold flex items-center justify-center gap-1.5 transition-all ${
-                      orderType === 'takeaway'
+                    className={`flex-1 py-2 px-3 rounded-lg text-xs sm:text-sm font-semibold flex items-center justify-center gap-1.5 transition-all ${orderType === 'takeaway'
                         ? 'bg-burgundy-900 text-gold-300 shadow-sm'
                         : 'text-stone-600 hover:text-stone-900'
-                    }`}
+                      }`}
                   >
                     <Store className="w-4 h-4 shrink-0" />
                     <span>Takeaway / Pickup</span>
@@ -271,7 +269,7 @@ export const CartDrawer = () => {
                     <input
                       type="tel"
                       name="phone"
-                      placeholder="e.g. 9876543210"
+                      placeholder="e.g. 6352188727"
                       value={customerInfo.phone}
                       onChange={handleInputChange}
                       className="w-full text-sm px-3 py-2 rounded-lg border border-stone-300 focus:outline-none focus:ring-1 focus:ring-burgundy-600 focus:border-burgundy-600 bg-stone-50/50"
