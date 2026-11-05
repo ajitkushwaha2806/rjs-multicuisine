@@ -1,5 +1,7 @@
-import React, { useState, useMemo, useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
+'use client';
+
+import React, { useState, useMemo, useEffect, Suspense } from 'react';
+import { useSearchParams, useRouter } from 'next/navigation';
 import { 
   Search, 
   ShoppingBag, 
@@ -13,13 +15,15 @@ import {
 } from 'lucide-react';
 import FoodCard from '../components/FoodCard';
 import VegNonVegBadge from '../components/VegNonVegBadge';
-import { MENU_CATEGORIES, SAMPLE_MENU_ITEMS } from '../data/menuData';
 import { useCart } from '../context/CartContext';
+import { usePrice } from '../context/PriceContext';
 
-export const MenuPage = () => {
+export const MenuPageContent = () => {
   const { cartCount, subtotal, setIsCartOpen } = useCart();
-  const [searchParams, setSearchParams] = useSearchParams();
-  const categoryParam = searchParams.get('category') || 'all';
+  const { getItemPrice, menuItems, categories } = usePrice();
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const categoryParam = searchParams ? searchParams.get('category') || 'all' : 'all';
 
   const [selectedCategory, setSelectedCategory] = useState(categoryParam);
   const [selectedSubCategory, setSelectedSubCategory] = useState('all');
@@ -39,28 +43,27 @@ export const MenuPage = () => {
     setSelectedCategory(catId);
     setSelectedSubCategory('all');
     if (catId === 'all') {
-      searchParams.delete('category');
+      router.replace('/menu', { scroll: false });
     } else {
-      searchParams.set('category', catId);
+      router.replace(`/menu?category=${encodeURIComponent(catId)}`, { scroll: false });
     }
-    setSearchParams(searchParams, { replace: true });
   };
 
   // Extract unique subcategories for the currently selected category
   const availableSubCategories = useMemo(() => {
     if (selectedCategory === 'all') return [];
     const subs = new Set();
-    SAMPLE_MENU_ITEMS.forEach((item) => {
+    menuItems.forEach((item) => {
       if (item.category === selectedCategory && item.subCategory) {
         subs.add(item.subCategory);
       }
     });
     return Array.from(subs);
-  }, [selectedCategory]);
+  }, [selectedCategory, menuItems]);
 
   // Filter and sort items
   const filteredItems = useMemo(() => {
-    return SAMPLE_MENU_ITEMS.filter((item) => {
+    return menuItems.filter((item) => {
       // Category match
       const matchesCategory =
         selectedCategory === 'all' || item.category === selectedCategory;
@@ -87,15 +90,17 @@ export const MenuPage = () => {
 
       return matchesCategory && matchesSubCategory && matchesDiet && matchesSearch;
     }).sort((a, b) => {
-      if (sortBy === 'price-low') return a.price - b.price;
-      if (sortBy === 'price-high') return b.price - a.price;
+      const priceA = getItemPrice(a);
+      const priceB = getItemPrice(b);
+      if (sortBy === 'price-low') return priceA - priceB;
+      if (sortBy === 'price-high') return priceB - priceA;
       if (sortBy === 'popular') return (b.isBestseller || b.isChefSpecial ? 1 : 0) - (a.isBestseller || a.isChefSpecial ? 1 : 0);
       return 0;
     });
-  }, [selectedCategory, selectedSubCategory, vegFilter, searchQuery, sortBy]);
+  }, [selectedCategory, selectedSubCategory, vegFilter, searchQuery, sortBy, getItemPrice, menuItems]);
 
   const currentCategoryName =
-    MENU_CATEGORIES.find((c) => c.id === selectedCategory)?.name || 'All Dishes';
+    categories.find((c) => c.id === selectedCategory)?.name || 'All Dishes';
 
   return (
     <div className="min-h-screen bg-[#FAF7F2] pb-24">
@@ -164,7 +169,7 @@ export const MenuPage = () => {
                       : 'text-stone-600 hover:text-stone-900'
                   }`}
                 >
-                  All ({SAMPLE_MENU_ITEMS.length})
+                  All ({menuItems.length})
                 </button>
                 <button
                   onClick={() => setVegFilter('veg')}
@@ -211,7 +216,7 @@ export const MenuPage = () => {
         {/* Category Pills Bar (Horizontal Scrollable) */}
         <div className="sticky top-[68px] sm:top-[74px] z-30 bg-[#FAF7F2]/95 backdrop-blur-md py-3 -mx-4 px-4 sm:mx-0 sm:px-0 mb-6 border-b border-stone-200/60 overflow-x-auto scrollbar-none">
           <div className="flex items-center gap-2 min-w-max pb-1">
-            {MENU_CATEGORIES.map((cat) => {
+            {categories.map((cat) => {
               const isSelected = selectedCategory === cat.id;
               return (
                 <button
@@ -378,6 +383,14 @@ export const MenuPage = () => {
         </div>
       )}
     </div>
+  );
+};
+
+export const MenuPage = () => {
+  return (
+    <Suspense fallback={<div className="min-h-screen py-24 text-center text-stone-500 font-semibold">Loading menu...</div>}>
+      <MenuPageContent />
+    </Suspense>
   );
 };
 

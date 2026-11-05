@@ -1,9 +1,19 @@
+'use client';
+
 import React from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { MapPin, Phone, Mail, Clock, MessageCircle, Heart, ShieldCheck, Award } from 'lucide-react';
 import RESTAURANT_CONFIG from '../config/restaurantConfig';
 
 export const Footer = () => {
+  const pathname = usePathname();
+
+  // Hide customer footer on admin routes
+  if (pathname?.startsWith('/admin')) {
+    return null;
+  }
+
   const quickWhatsAppUrl = `https://wa.me/${RESTAURANT_CONFIG.whatsappNumber.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(
     `Hello ${RESTAURANT_CONFIG.name}! I would like to place an order or ask a question.`
   )}`;
@@ -75,17 +85,17 @@ export const Footer = () => {
           </h3>
           <ul className="space-y-2 text-sm">
             <li>
-              <Link to="/" className="text-cream-300 hover:text-gold-400 transition-colors">
+              <Link href="/" className="text-cream-300 hover:text-gold-400 transition-colors">
                 Home
               </Link>
             </li>
             <li>
-              <Link to="/menu" className="text-cream-300 hover:text-gold-400 transition-colors">
+              <Link href="/menu" className="text-cream-300 hover:text-gold-400 transition-colors">
                 Complete Digital Menu
               </Link>
             </li>
             <li>
-              <Link to="/contact" className="text-cream-300 hover:text-gold-400 transition-colors">
+              <Link href="/contact" className="text-cream-300 hover:text-gold-400 transition-colors">
                 Table Reservation & Contact
               </Link>
             </li>

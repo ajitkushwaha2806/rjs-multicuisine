@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState } from 'react';
 import {
   MapPin,
@@ -148,7 +150,7 @@ export const ContactPage = () => {
                     type="tel"
                     name="phone"
                     required
-                    placeholder="e.g. 6352188727"
+                    placeholder="e.g. 9876543210"
                     value={formData.phone}
                     onChange={handleInputChange}
                     className="w-full text-xs sm:text-sm px-3.5 py-2.5 rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-burgundy-600 focus:border-burgundy-600 bg-stone-50"

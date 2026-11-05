@@ -1,10 +1,14 @@
+'use client';
+
 import React, { useState } from 'react';
 import { Plus, Minus, Flame, Star, Sparkles } from 'lucide-react';
 import VegNonVegBadge from './VegNonVegBadge';
 import { useCart } from '../context/CartContext';
+import { usePrice } from '../context/PriceContext';
 
 export const FoodCard = ({ item }) => {
   const { cart, addToCart, updateQuantity } = useCart();
+  const { getItemPrice } = usePrice();
 
   // Customization / Variant handling (e.g. Small / Large, Gravy / Dry, 450 Gm)
   const variantGroup = item.variants?.[0];
@@ -17,8 +21,9 @@ export const FoodCard = ({ item }) => {
     return defaultOpt ? defaultOpt.option_id : null;
   });
 
+  const basePrice = getItemPrice(item);
   const currentOption = options.find((o) => o.option_id === selectedOptionId);
-  const activePrice = currentOption ? Number(currentOption.price) : Number(item.price);
+  const activePrice = currentOption ? Number(currentOption.price) : basePrice;
   const activeItemId = currentOption && hasMultipleOptions ? `${item.id}-${currentOption.option_id}` : item.id;
   const activeItemName = currentOption && hasMultipleOptions ? `${item.name} (${currentOption.option_name})` : item.name;
 

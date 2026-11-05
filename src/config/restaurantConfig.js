@@ -14,7 +14,7 @@ export const RESTAURANT_CONFIG = {
   // =========================================================================
   // WhatsApp Configuration (Direct Orders to Official Business WhatsApp)
   // =========================================================================
-  whatsappNumber: import.meta.env.VITE_WHATSAPP_NUMBER || "918490065500",
+  whatsappNumber: (typeof process !== 'undefined' && process.env?.NEXT_PUBLIC_WHATSAPP_NUMBER) || "918490065500",
 
   phone: "+91 84900 65500",
   displayPhone: "084900 65500",

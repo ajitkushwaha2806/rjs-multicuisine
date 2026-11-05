@@ -1,5 +1,7 @@
+'use client';
+
 import React from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { 
   ArrowRight, 
   MessageCircle, 
@@ -16,17 +18,19 @@ import {
   CheckCircle2
 } from 'lucide-react';
 import FoodCard from '../components/FoodCard';
-import { SAMPLE_MENU_ITEMS } from '../data/menuData';
+import { usePrice } from '../context/PriceContext';
 import RESTAURANT_CONFIG from '../config/restaurantConfig';
 
 export const HomePage = () => {
+  const { menuItems } = usePrice();
+
   // Select featured items (bestsellers & chef specials across diverse categories)
   const featuredItems = React.useMemo(() => {
     // Pick iconic bestsellers across categories
-    const specials = SAMPLE_MENU_ITEMS.filter((item) => item.isChefSpecial || item.isBestseller);
+    const specials = menuItems.filter((item) => item.isChefSpecial || item.isBestseller);
     // Take up to 8 diverse items
     return specials.slice(0, 8);
-  }, []);
+  }, [menuItems]);
 
   const directWhatsAppOrderUrl = `https://wa.me/${RESTAURANT_CONFIG.whatsappNumber.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(
     `Hello ${RESTAURANT_CONFIG.name}! I would like to explore the menu and place an order on WhatsApp.`
@@ -99,7 +103,7 @@ export const HomePage = () => {
             {/* CTAs */}
             <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-3">
               <Link
-                to="/menu"
+                href="/menu"
                 className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 bg-gradient-to-r from-gold-500 to-gold-600 hover:from-gold-400 hover:to-gold-500 text-burgundy-950 font-bold px-7 py-4 rounded-xl shadow-luxury-gold transition-all duration-300 transform hover:-translate-y-0.5 text-base"
               >
                 <UtensilsCrossed className="w-5 h-5 text-burgundy-950" />
@@ -166,7 +170,7 @@ export const HomePage = () => {
                   <div className="flex items-center justify-between pt-2 border-t border-burgundy-800">
                     <span className="text-xl font-bold font-serif text-gold-400">₹269 <span className="text-xs font-normal text-cream-200">(450 Gm)</span></span>
                     <Link
-                      to="/menu?category=main-course"
+                      href="/menu?category=main-course"
                       className="text-xs font-semibold text-white hover:text-gold-300 flex items-center gap-1 group"
                     >
                       <span>Order in Menu</span>
@@ -208,7 +212,7 @@ export const HomePage = () => {
               </p>
             </div>
             <Link
-              to="/menu"
+              href="/menu"
               className="inline-flex items-center gap-2 bg-burgundy-900 hover:bg-burgundy-800 text-gold-300 px-5 py-2.5 rounded-xl text-sm font-semibold transition-all shadow-sm"
             >
               <span>View All 150+ Dishes</span>
@@ -312,7 +316,7 @@ export const HomePage = () => {
             </div>
             <div className="pt-4 flex flex-wrap gap-4">
               <Link
-                to="/contact"
+                href="/contact"
                 className="bg-gold-500 hover:bg-gold-400 text-burgundy-950 font-bold px-6 py-3 rounded-xl transition-all shadow-md text-sm"
               >
                 Book a Table Now
@@ -426,7 +430,7 @@ export const HomePage = () => {
               <span>Open WhatsApp Chat</span>
             </a>
             <Link
-              to="/menu"
+              href="/menu"
               className="bg-gold-500 hover:bg-gold-400 text-burgundy-950 font-bold py-3.5 px-6 rounded-xl shadow-md transition-all text-sm text-center"
             >
               Explore Digital Menu

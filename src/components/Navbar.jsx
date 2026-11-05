@@ -1,5 +1,8 @@
+'use client';
+
 import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { ShoppingBag, Menu as MenuIcon, X, Phone, MessageCircle, Clock, MapPin } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import RESTAURANT_CONFIG from '../config/restaurantConfig';
@@ -8,7 +11,7 @@ export const Navbar = () => {
   const { cartCount, setIsCartOpen } = useCart();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const location = useLocation();
+  const pathname = usePathname();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -25,7 +28,12 @@ export const Navbar = () => {
   // Close mobile drawer on route change
   useEffect(() => {
     setMobileMenuOpen(false);
-  }, [location.pathname]);
+  }, [pathname]);
+
+  // Hide the store navbar on admin pages to prevent duplicate headers
+  if (pathname?.startsWith('/admin')) {
+    return null;
+  }
 
   const navLinks = [
     { name: 'Home', path: '/' },
@@ -79,7 +87,7 @@ export const Navbar = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
           
           {/* Official Logo & Brand */}
-          <Link to="/" className="flex items-center gap-3 group">
+          <Link href="/" className="flex items-center gap-3 group">
             <img
               src="/logo.jpg"
               alt="RJ's Multicuisine Restaurant Logo"
@@ -98,11 +106,11 @@ export const Navbar = () => {
           {/* Desktop Navigation Links */}
           <nav className="hidden lg:flex items-center space-x-1 xl:space-x-2">
             {navLinks.map((link) => {
-              const isActive = location.pathname === link.path;
+              const isActive = pathname === link.path;
               return (
                 <Link
                   key={link.name}
-                  to={link.path}
+                  href={link.path}
                   className={`px-3.5 py-2 rounded-lg text-sm font-medium tracking-wide transition-all duration-200 ${
                     isActive
                       ? 'text-gold-400 bg-burgundy-950/70 border border-gold-500/30 font-semibold'
@@ -162,11 +170,11 @@ export const Navbar = () => {
         {mobileMenuOpen && (
           <div className="lg:hidden bg-burgundy-950 border-b border-burgundy-800 px-4 pt-4 pb-6 space-y-2 animate-fadeIn">
             {navLinks.map((link) => {
-              const isActive = location.pathname === link.path;
+              const isActive = pathname === link.path;
               return (
                 <Link
                   key={link.name}
-                  to={link.path}
+                  href={link.path}
                   className={`block px-4 py-2.5 rounded-lg text-base font-medium transition-colors ${
                     isActive
                       ? 'bg-burgundy-800 text-gold-400 font-semibold'
