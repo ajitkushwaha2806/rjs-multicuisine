@@ -9,7 +9,6 @@ import {
   Eye, 
   EyeOff, 
   ShieldCheck, 
-  Users, 
   ArrowRight, 
   LogOut, 
   Search, 
@@ -57,7 +56,6 @@ export const AdminAuthPage = () => {
     }
   }, []);
 
-  const [activeTab, setActiveTab] = useState('admin'); // 'admin' | 'staff'
   const [adminSection, setAdminSection] = useState('menu-prices'); // 'menu-prices' | 'billing-taxes'
   const [showPassword, setShowPassword] = useState(false);
   const [authError, setAuthError] = useState('');
@@ -292,38 +290,11 @@ export const AdminAuthPage = () => {
             <p className="text-xs text-stone-500 font-medium">Restaurant Administration & Pricing</p>
           </div>
 
-          {/* Role Tabs */}
-          <div className="bg-stone-100 p-1.5 rounded-2xl flex items-center gap-2 border border-stone-200/70">
-            <button
-              type="button"
-              onClick={() => setActiveTab('admin')}
-              className={`flex-1 py-2.5 px-3 rounded-xl text-xs sm:text-sm font-semibold flex items-center justify-center gap-2 transition-all ${
-                activeTab === 'admin'
-                  ? 'bg-white text-emerald-950 shadow-sm border border-stone-200/80'
-                  : 'text-stone-500 hover:text-stone-800'
-              }`}
-            >
-              <ShieldCheck className="w-4 h-4 text-emerald-600" />
-              <span>Admin</span>
-            </button>
-            <button
-              type="button"
-              onClick={() => setActiveTab('staff')}
-              className={`flex-1 py-2.5 px-3 rounded-xl text-xs sm:text-sm font-semibold flex items-center justify-center gap-2 transition-all ${
-                activeTab === 'staff'
-                  ? 'bg-white text-stone-900 shadow-sm border border-stone-200/80'
-                  : 'text-stone-500 hover:text-stone-800'
-              }`}
-            >
-              <Users className="w-4 h-4 text-stone-600" />
-              <span>Staff Portal</span>
-            </button>
-          </div>
-
           {/* Form Header */}
-          <div className="space-y-1">
-            <h2 className="text-lg font-bold text-stone-900">
-              {activeTab === 'admin' ? 'Admin Workspace Login' : 'Staff Portal Login'}
+          <div className="space-y-1 pt-1">
+            <h2 className="text-lg font-bold text-stone-900 flex items-center gap-2">
+              <ShieldCheck className="w-5 h-5 text-emerald-700" />
+              <span>Admin Login</span>
             </h2>
             <p className="text-xs text-stone-500">
               Enter your credentials to manage menu prices, taxes, discounts, and payment scanner.

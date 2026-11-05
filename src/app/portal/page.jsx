@@ -1,9 +1,5 @@
-import AdminAuthPage from '../../views/AdminAuthPage';
-
-export const metadata = {
-  title: "Admin Portal | RJ's Multicuisine",
-};
+import { redirect } from 'next/navigation';
 
 export default function Page() {
-  return <AdminAuthPage />;
+  redirect('/admin');
 }
