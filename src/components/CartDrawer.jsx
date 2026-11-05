@@ -59,15 +59,13 @@ export const CartDrawer = () => {
 
   const [validationError, setValidationError] = useState('');
   const [showScanner, setShowScanner] = useState(true);
+  const [copiedUpi, setCopiedUpi] = useState(false);
   const pathname = usePathname();
 
-  // Hide cart drawer on admin routes
-  if (pathname?.startsWith('/admin')) {
+  // Hide cart drawer on admin routes or when cart is closed
+  if (pathname?.startsWith('/admin') || !isCartOpen) {
     return null;
   }
-  const [copiedUpi, setCopiedUpi] = useState(false);
-
-  if (!isCartOpen) return null;
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
